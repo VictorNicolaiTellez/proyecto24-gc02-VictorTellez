@@ -173,23 +173,7 @@ def search_result():
     
     # Si es GET, muestra la página inicial de búsqueda
     return render_template('search.html')
-    if request.method == 'POST':
-        # Obtén el término de búsqueda desde el formulario
-        termino_busqueda = request.form.get('query', '').strip()
-
-        # Aquí podrías realizar una búsqueda en la base de datos o lógica personalizada
-        # Por ahora, simplemente muestra el término buscado
-        resultados = f"Resultados para: {termino_busqueda}"
-        
-        #Pueba ejemplo lista(cambiar por BD)
-        resultados = ["Ejemplo 1", "Ejemplo 2"] if termino_busqueda == "prueba" else []
-        
-        # Renderiza una página con los resultados
-        return render_template('search.html', resultados=resultados)
-        #return render_template('search.html', termino=termino_busqueda, resultados=resultados)
-    
-    # Si es GET, muestra la página inicial de búsqueda
-    return render_template('search.html')
+   
 
 @app.route('/perfil/')
 def perfil():
