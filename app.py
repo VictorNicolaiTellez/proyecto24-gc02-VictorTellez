@@ -4,6 +4,10 @@ from flask import redirect, url_for
 from flask import request, session,jsonify
 import requests
 
+from dotenv import load_dotenv
+import os
+
+
 from API_Contenidos.swagger_server import contenidos_blueprint
 from API_Contenidos.swagger_server.controllers import peliculas_controller, series_controller
 from API_Usuario.swagger_server.controllers import usuarios_controller
@@ -13,9 +17,11 @@ from API_Contenidos import dbconnection_contenidos
 from API_Usuario import dbconnection_usuarios
 from API_Visualizaciones import dbconnection_visualizaciones
 
+load_dotenv()  # Carga las variables de entorno desde el archivo .env
+
 app = Flask(__name__)
-app.secret_key = 'SECRETA'
-app.config['SESSION_TYPE'] = 'filesystem' 
+
+app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')
 
 # Registrar cada API con un prefijo de URL
 app.register_blueprint(contenidos_blueprint, url_prefix='/api/contenidos')
@@ -173,23 +179,7 @@ def search_result():
     
     # Si es GET, muestra la página inicial de búsqueda
     return render_template('search.html')
-    if request.method == 'POST':
-        # Obtén el término de búsqueda desde el formulario
-        termino_busqueda = request.form.get('query', '').strip()
-
-        # Aquí podrías realizar una búsqueda en la base de datos o lógica personalizada
-        # Por ahora, simplemente muestra el término buscado
-        resultados = f"Resultados para: {termino_busqueda}"
-        
-        #Pueba ejemplo lista(cambiar por BD)
-        resultados = ["Ejemplo 1", "Ejemplo 2"] if termino_busqueda == "prueba" else []
-        
-        # Renderiza una página con los resultados
-        return render_template('search.html', resultados=resultados)
-        #return render_template('search.html', termino=termino_busqueda, resultados=resultados)
-    
-    # Si es GET, muestra la página inicial de búsqueda
-    return render_template('search.html')
+   
 
 @app.route('/perfil/')
 def perfil():

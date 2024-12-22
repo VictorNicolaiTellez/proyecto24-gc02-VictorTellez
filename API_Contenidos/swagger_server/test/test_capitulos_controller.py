@@ -18,7 +18,7 @@ class TestCapitulosController(BaseTestCase):
         Obtener todos los capítulos de una temporada específica
         """
         response = self.client.open(
-            '/series/{id}/temporadas/{temporadaId}/capitulos'.format(id='id_example', temporada_id='temporada_id_example'),
+            '/series/{id}/temporadas/{temporadaId}/capitulos'.format(id='id_example', temporadaId='temporada_id_example'),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
